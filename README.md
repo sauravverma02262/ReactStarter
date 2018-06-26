@@ -1,6 +1,6 @@
 # ReactStarter
 React Quick start package.json file
-
+```
 {
   "name": "projectname",
   "version": "0.1.0",
@@ -34,4 +34,4 @@ React Quick start package.json file
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
-}
+}```
