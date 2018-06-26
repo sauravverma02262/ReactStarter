@@ -23,7 +23,10 @@ React Quick start package.json file
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
-    "sort-by": "^1.2.0"
+    "sort-by": "^1.2.0",
+    "redux-mock-store": "^1.5.1",
+    "enzyme": "^3.1.0",
+    "enzyme-adapter-react-16": "^1.0.2"
   },
   "scripts": {
     "build-css": "node-sass-chokidar src/Styles/SCSS -o src/Style/",
@@ -34,4 +37,60 @@ React Quick start package.json file
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
-}```
+}`
+
+#
+
+```let rootReducer = combineReducers({
+  ...reducers name here...
+});
+export default rootReducer
+
+```import React from 'react';
+import ReactDOM from 'react-dom';
+import './Styles/main.css';
+import App from './Components/App';
+import {createStore, applyMiddleware, compose} from 'redux'
+import {BrowserRouter} from 'react-router-dom'
+import registerServiceWorker from './registerServiceWorker';
+import {Provider} from 'react-redux'
+import reducers from './Store/index'
+import thunk from 'redux-thunk'
+import logger from 'redux-logger'
+let middleware = applyMiddleware(thunk, logger)
+
+const store = createStore(
+  reducers,
+  compose (middleware, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+)
+
+ReactDOM.render(
+  <BrowserRouter>
+  <Provider store={store}>
+    <App/>
+  </Provider>
+</BrowserRouter>, document.getElementById('root'));
+registerServiceWorker();
+
+
+```import React, { Component } from 'react';
+import '../Styles/App.css';
+import Community from './Community/Community'
+import {Route} from 'react-router-dom'
+
+//import NOTFOUND from '../Components/NotFound/NotFound'
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+          <Route exact path="/" render={() => <Community path=""/>}/>
+          <Route exact path="/react" render={() => <Community path="react"/>}/>
+          <Route exact path="/react/:postId" render={() => <Community hasPost postId={window.location.pathname.split('/')[2]} path={'react'}/>}/>
+      </div>
+    );
+  }
+}
+
+export default App
+
+
